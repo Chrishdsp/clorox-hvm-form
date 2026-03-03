@@ -421,6 +421,10 @@
     <p id="r_meta"></p>
   </div>
   <div class="report-body">
+    <div class="info-box" style="margin-bottom:16px">
+      ✅ <strong>Thank you! Your assessment has been submitted.</strong><br>
+      Please click <strong>"Save as PDF / Print"</strong> below, save the file, and email it to <strong>your BW Design Group contact</strong> to complete the process.
+    </div>
     <div class="print-btn">
       <button class="btn-print" onclick="window.print()">🖨️ Save as PDF / Print</button>
       <button class="btn-back" onclick="goBack()">← Edit Form</button>
@@ -510,8 +514,68 @@
   updateProgress();
 
   // ── submit ──
-  function submitForm(){
+  async function submitForm(){
     const now=new Date().toLocaleString('en-US',{dateStyle:'long',timeStyle:'short'});
+
+    // Send to Formspree
+    const formData={
+      submitter: val('f_name'),
+      company: val('f_company'),
+      email: val('f_email'),
+      phone: val('f_phone'),
+      target_start: val('f_start'),
+      completion_date: val('f_end'),
+      shutdown_periods: val('f_shutdown'),
+      environment: radio('env'),
+      live_production: radio('live'),
+      work_hours: checks('chk_hours'),
+      safety_orientation: radio('orient'),
+      hot_work_permit: radio('hotwork'),
+      ventilation: radio('vent'),
+      ppe_restrictions: val('f_ppe'),
+      hades_sqft: val('h_sqft'),
+      hades_depth: val('h_depth'),
+      hades_conditions: checks('chk_hcond'),
+      hades_removed: val('h_removed'),
+      hades_finish: radio('h_finish'),
+      hades_moisture: radio('h_moisture'),
+      hades_moisture_detail: val('h_mdetail_txt'),
+      hades_anchors: radio('h_anchors'),
+      hades_notes: val('h_notes'),
+      pluto_sqft: val('p_sqft'),
+      pluto_depth: val('p_depth'),
+      pluto_conditions: checks('chk_pcond'),
+      pluto_removed: val('p_removed'),
+      pluto_finish: radio('p_finish'),
+      pluto_moisture: radio('p_moisture'),
+      pluto_moisture_detail: val('p_mdetail_txt'),
+      pluto_footprint: radio('p_footprint'),
+      pluto_notes: val('p_notes'),
+      epoxy_product: val('f_epoxy'),
+      coating_age: val('f_age'),
+      coating_color: val('f_color'),
+      texture: radio('texture'),
+      previously_patched: radio('prev'),
+      drainage: radio('drain'),
+      demo_status: radio('demo'),
+      anchor_responsibility: radio('anchresp'),
+      surface_prep: radio('prep'),
+      open_questions: val('f_openq'),
+      job_walk_needed: radio('jobwalk'),
+      job_walk_dates: val('f_walkdate'),
+      job_walk_contact: val('f_walkcontact'),
+      submitted_at: now
+    };
+
+    try {
+      await fetch('https://formspree.io/f/xzdandro', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(formData)
+      });
+    } catch(e) {
+      console.error('Formspree error:',e);
+    }
 
     // build report sections
     document.getElementById('r_meta').textContent=`Submitted: ${now} · Project: Clorox HVM – Reno Floor Patching (Hades & Pluto)`;
