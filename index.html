@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clorox HVM – Floor Patching Pre-Quote Assessment</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',sans-serif;background:#f0f2f5;color:#222}
+  header{background:linear-gradient(135deg,#7b1113,#b01e20);color:white;padding:24px 32px}
+  header h1{font-size:1.4rem;font-weight:700}
+  header p{font-size:0.85rem;opacity:0.85;margin-top:4px}
+  .container{max-width:860px;margin:32px auto;padding:0 16px 60px}
+  .section{background:white;border-radius:10px;padding:24px;margin-bottom:24px;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+  .section-title{font-size:1rem;font-weight:700;color:#7b1113;border-bottom:2px solid #f0e8e8;padding-bottom:10px;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+  .section-title .badge{background:#7b1113;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0}
+  .field-group{margin-bottom:18px}
+  label{display:block;font-size:0.82rem;font-weight:600;margin-bottom:5px;color:#444}
+  label .req{color:#b01e20}
+  input[type=text],input[type=number],input[type=email],textarea,select{width:100%;padding:9px 12px;border:1px solid #d0d0d0;border-radius:6px;font-size:0.9rem;background:#fafafa;transition:border 0.2s}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:#7b1113;background:white}
+  textarea{resize:vertical;min-height:80px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .radio-group,.check-group{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .radio-group label,.check-group label{display:flex;align-items:center;gap:6px;font-weight:400;font-size:0.88rem;cursor:pointer;background:#f5f5f5;border:1px solid #ddd;border-radius:6px;padding:7px 12px;transition:all 0.15s}
+  .radio-group label:hover,.check-group label:hover{border-color:#7b1113;background:#fdf0f0}
+  .radio-group input,.check-group input{accent-color:#7b1113}
+  .area-tab-bar{display:flex;gap:8px;margin-bottom:20px}
+  .area-tab{padding:8px 20px;border-radius:6px;border:2px solid #ddd;cursor:pointer;font-weight:600;font-size:0.88rem;background:#f5f5f5;color:#555;transition:all 0.2s}
+  .area-tab.active{border-color:#7b1113;background:#7b1113;color:white}
+  .area-panel{display:none}
+  .area-panel.active{display:block}
+  .info-box{background:#fff8e1;border-left:4px solid #f9a825;border-radius:4px;padding:10px 14px;font-size:0.82rem;color:#555;margin-bottom:16px}
+  .submit-btn{width:100%;padding:14px;background:#7b1113;color:white;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;transition:background 0.2s;margin-top:8px}
+  .submit-btn:hover{background:#5a0d0f}
+  .conditional{display:none;margin-top:10px}
+  .conditional.show{display:block}
+  .progress-bar{height:4px;background:#e0e0e0;border-radius:2px;margin-bottom:24px}
+  .progress-fill{height:100%;background:#7b1113;border-radius:2px;width:0%;transition:width 0.3s}
+
+  /* ── REPORT (shown after submit, printed as PDF) ── */
+  #report{display:none;max-width:860px;margin:32px auto;padding:0 16px 60px}
+  .report-header{background:linear-gradient(135deg,#7b1113,#b01e20);color:white;padding:28px 32px;border-radius:10px 10px 0 0}
+  .report-header h1{font-size:1.3rem;font-weight:700}
+  .report-header p{font-size:0.82rem;opacity:0.8;margin-top:4px}
+  .report-body{background:white;border-radius:0 0 10px 10px;padding:28px 32px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+  .report-section{margin-bottom:28px;border-bottom:1px solid #eee;padding-bottom:20px}
+  .report-section:last-child{border-bottom:none}
+  .report-section h2{font-size:0.95rem;font-weight:700;color:#7b1113;margin-bottom:14px;text-transform:uppercase;letter-spacing:0.04em}
+  .report-row{display:grid;grid-template-columns:220px 1fr;gap:8px;margin-bottom:8px;font-size:0.88rem}
+  .report-row .lbl{color:#666;font-weight:600}
+  .report-row .val{color:#222}
+  .area-block{background:#f9f9f9;border-radius:8px;padding:16px;margin-bottom:16px}
+  .area-block h3{font-size:0.9rem;font-weight:700;margin-bottom:12px;color:#333}
+  .estimate-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:0.88rem}
+  .estimate-table th{background:#7b1113;color:white;padding:8px 12px;text-align:left}
+  .estimate-table td{border:1px solid #ddd;padding:8px 12px;vertical-align:top}
+  .estimate-table .blank{background:#fffde7;min-height:32px}
+  .print-btn{display:flex;gap:12px;margin-bottom:24px}
+  .print-btn button{padding:10px 24px;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.9rem}
+  .btn-print{background:#7b1113;color:white}
+  .btn-back{background:#eee;color:#333}
+
+  @media print{
+    body{background:white}
+    #form-wrapper,header{display:none!important}
+    #report{display:block!important}
+    .print-btn{display:none!important}
+  }
+  @media(max-width:600px){
+    .grid2{grid-template-columns:1fr}
+    .report-row{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div id="form-wrapper">
+<header>
+  <h1>🏭 Clorox HVM – Reno | Floor Patching Pre-Quote Assessment</h1>
+  <p>Complete this form so HDSP can quote accurately — reducing or eliminating the need for a full job walk.</p>
+</header>
+
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+  <!-- 1. PROJECT INFO -->
+  <div class="section">
+    <div class="section-title"><span class="badge">1</span> Project & Contact Info</div>
+    <div class="grid2">
+      <div class="field-group">
+        <label>Submitted By <span class="req">*</span></label>
+        <input type="text" id="f_name" placeholder="Your name">
+      </div>
+      <div class="field-group">
+        <label>Company</label>
+        <input type="text" id="f_company" placeholder="e.g. High Desert Surface Prep">
+      </div>
+      <div class="field-group">
+        <label>Email <span class="req">*</span></label>
+        <input type="email" id="f_email" placeholder="your@email.com">
+      </div>
+      <div class="field-group">
+        <label>Phone</label>
+        <input type="text" id="f_phone" placeholder="775-300-1883">
+      </div>
+      <div class="field-group">
+        <label>Target Construction Start</label>
+        <input type="text" id="f_start" placeholder="e.g. April 2026">
+      </div>
+      <div class="field-group">
+        <label>Required Completion Date</label>
+        <input type="text" id="f_end" placeholder="e.g. May 2026">
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Known shutdown windows or blackout periods?</label>
+      <textarea id="f_shutdown" placeholder="e.g. Production shutdown April 14–18..."></textarea>
+    </div>
+  </div>
+
+  <!-- 2. SITE ACCESS -->
+  <div class="section">
+    <div class="section-title"><span class="badge">2</span> Site Access & Working Conditions</div>
+    <div class="field-group">
+      <label>Environment type <span class="req">*</span></label>
+      <div class="radio-group">
+        <label><input type="radio" name="env" value="Dry Room (food-safe)"> Dry Room (food-safe)</label>
+        <label><input type="radio" name="env" value="Wet / Washdown"> Wet / Washdown</label>
+        <label><input type="radio" name="env" value="Standard Industrial"> Standard Industrial</label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Will the area be live during work? <span class="req">*</span></label>
+      <div class="radio-group">
+        <label><input type="radio" name="live" value="No – Full Shutdown"> No – Full Shutdown</label>
+        <label><input type="radio" name="live" value="Partial – Adjacent lines running"> Partial – Adjacent lines running</label>
+        <label><input type="radio" name="live" value="Yes – Live production"> Yes – Live production</label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Work hour restrictions</label>
+      <div class="check-group" id="chk_hours">
+        <label><input type="checkbox" value="Day shift only"> Day shift only</label>
+        <label><input type="checkbox" value="Nights/weekends preferred"> Nights/weekends preferred</label>
+        <label><input type="checkbox" value="No restrictions"> No restrictions</label>
+        <label><input type="checkbox" value="Shutdown window only"> Shutdown window only</label>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="field-group">
+        <label>Safety orientation required?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="orient" value="Yes"> Yes</label>
+          <label><input type="radio" name="orient" value="No"> No</label>
+          <label><input type="radio" name="orient" value="Unknown"> Unknown</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Hot work permit required?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="hotwork" value="Yes"> Yes</label>
+          <label><input type="radio" name="hotwork" value="No"> No</label>
+          <label><input type="radio" name="hotwork" value="Unknown"> Unknown</label>
+        </div>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Ventilation in work area?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="vent" value="Good – existing HVAC"> Good – existing HVAC</label>
+        <label><input type="radio" name="vent" value="Limited"> Limited</label>
+        <label><input type="radio" name="vent" value="None / confined space"> None / confined space</label>
+        <label><input type="radio" name="vent" value="Unknown"> Unknown</label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Special PPE or access restrictions</label>
+      <textarea id="f_ppe" placeholder="e.g. Steel toe, hairnets, escort required, no photography..."></textarea>
+    </div>
+  </div>
+
+  <!-- 3. AREA DETAILS -->
+  <div class="section">
+    <div class="section-title"><span class="badge">3</span> Area-Specific Details</div>
+    <div class="info-box">⚠️ Complete both tabs — HDSP will quote each area separately.</div>
+    <div class="area-tab-bar">
+      <div class="area-tab active" onclick="switchTab('hades',this)">🔴 Hades Line</div>
+      <div class="area-tab" onclick="switchTab('pluto',this)">🔵 Pluto Line</div>
+    </div>
+
+    <!-- HADES -->
+    <div class="area-panel active" id="panel-hades">
+      <div class="grid2">
+        <div class="field-group">
+          <label>Approx. patch area (sq ft) <span class="req">*</span></label>
+          <input type="number" id="h_sqft" placeholder="e.g. 120">
+        </div>
+        <div class="field-group">
+          <label>Estimated patch depth</label>
+          <input type="text" id="h_depth" placeholder='e.g. 1/4", feathered, unknown'>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Existing floor conditions</label>
+        <div class="check-group" id="chk_hcond">
+          <label><input type="checkbox" value="Cracked concrete"> Cracked concrete</label>
+          <label><input type="checkbox" value="Existing epoxy coating"> Existing epoxy</label>
+          <label><input type="checkbox" value="Old anchor bolt holes"> Anchor bolt holes</label>
+          <label><input type="checkbox" value="Depressed/uneven areas"> Uneven areas</label>
+          <label><input type="checkbox" value="Previous patches visible"> Previous patches</label>
+          <label><input type="checkbox" value="Clean / no damage"> Clean / no damage</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>What is being removed?</label>
+        <textarea id="h_removed" placeholder="e.g. Existing labeler, anchor bolts, conduit penetrations">Existing labeler and associated anchor points / conduit penetrations</textarea>
+      </div>
+      <div class="field-group">
+        <label>Finish / match requirement</label>
+        <div class="radio-group">
+          <label><input type="radio" name="h_finish" value="Match existing epoxy color/texture"> Match existing</label>
+          <label><input type="radio" name="h_finish" value="Functional only – no color match"> Functional only</label>
+          <label><input type="radio" name="h_finish" value="Full reseal of entire area"> Full reseal</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Moisture barrier / pour-back required? <span class="req">*</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="h_moisture" value="Yes" onclick="showC('h_mdetail')"> Yes</label>
+          <label><input type="radio" name="h_moisture" value="No" onclick="hideC('h_mdetail')"> No</label>
+          <label><input type="radio" name="h_moisture" value="Unknown – needs assessment" onclick="showC('h_mdetail')"> Unknown</label>
+        </div>
+        <div class="conditional" id="h_mdetail">
+          <textarea id="h_mdetail_txt" placeholder="Describe: full pour-back, surface barrier only, vapor membrane..."></textarea>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>New anchor bolt locations known?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="h_anchors" value="Yes – drawings provided"> Yes – drawings provided</label>
+          <label><input type="radio" name="h_anchors" value="No – demo only"> No – demo only</label>
+          <label><input type="radio" name="h_anchors" value="TBD"> TBD</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Additional notes – Hades</label>
+        <textarea id="h_notes" placeholder="Any other relevant info..."></textarea>
+      </div>
+    </div>
+
+    <!-- PLUTO -->
+    <div class="area-panel" id="panel-pluto">
+      <div class="grid2">
+        <div class="field-group">
+          <label>Approx. patch area (sq ft) <span class="req">*</span></label>
+          <input type="number" id="p_sqft" placeholder="e.g. 80">
+        </div>
+        <div class="field-group">
+          <label>Estimated patch depth</label>
+          <input type="text" id="p_depth" placeholder='e.g. 1/4", feathered, unknown'>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Existing floor conditions</label>
+        <div class="check-group" id="chk_pcond">
+          <label><input type="checkbox" value="Cracked concrete"> Cracked concrete</label>
+          <label><input type="checkbox" value="Existing epoxy coating"> Existing epoxy</label>
+          <label><input type="checkbox" value="Old anchor bolt holes"> Anchor bolt holes</label>
+          <label><input type="checkbox" value="Depressed/uneven areas"> Uneven areas</label>
+          <label><input type="checkbox" value="Previous patches visible"> Previous patches</label>
+          <label><input type="checkbox" value="Clean / no damage"> Clean / no damage</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>What is being removed?</label>
+        <textarea id="p_removed" placeholder="e.g. Bypass conveyor with cartoner">Bypass conveyor with cartoner – full removal. Replaced with simple conveyance section.</textarea>
+      </div>
+      <div class="field-group">
+        <label>Finish / match requirement</label>
+        <div class="radio-group">
+          <label><input type="radio" name="p_finish" value="Match existing epoxy color/texture"> Match existing</label>
+          <label><input type="radio" name="p_finish" value="Functional only – no color match"> Functional only</label>
+          <label><input type="radio" name="p_finish" value="Full reseal of entire area"> Full reseal</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Moisture barrier / pour-back required? <span class="req">*</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="p_moisture" value="Yes" onclick="showC('p_mdetail')"> Yes</label>
+          <label><input type="radio" name="p_moisture" value="No" onclick="hideC('p_mdetail')"> No</label>
+          <label><input type="radio" name="p_moisture" value="Unknown – needs assessment" onclick="showC('p_mdetail')"> Unknown</label>
+        </div>
+        <div class="conditional" id="p_mdetail">
+          <textarea id="p_mdetail_txt" placeholder="Describe: full pour-back, surface barrier only, vapor membrane..."></textarea>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>New conveyance footprint vs. removed equipment?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="p_footprint" value="Smaller – exposed floor to patch"> Smaller – floor to patch</label>
+          <label><input type="radio" name="p_footprint" value="Same footprint"> Same footprint</label>
+          <label><input type="radio" name="p_footprint" value="Larger – existing floor is fine"> Larger – floor is fine</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Additional notes – Pluto</label>
+        <textarea id="p_notes" placeholder="Any other relevant info..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. FLOOR SPECS -->
+  <div class="section">
+    <div class="section-title"><span class="badge">4</span> Existing Floor Specifications</div>
+    <div class="info-box">💡 Partial info here can save a site visit.</div>
+    <div class="grid2">
+      <div class="field-group">
+        <label>Known epoxy product / system</label>
+        <input type="text" id="f_epoxy" placeholder="e.g. Sherwin-Williams ArmorSeal, unknown">
+      </div>
+      <div class="field-group">
+        <label>Approximate age of coating</label>
+        <input type="text" id="f_age" placeholder="e.g. 5 years, unknown">
+      </div>
+      <div class="field-group">
+        <label>Coating color</label>
+        <input type="text" id="f_color" placeholder="e.g. Gray, tan, unknown">
+      </div>
+      <div class="field-group">
+        <label>Coating texture / finish</label>
+        <div class="radio-group">
+          <label><input type="radio" name="texture" value="Smooth"> Smooth</label>
+          <label><input type="radio" name="texture" value="Broadcast/aggregate"> Broadcast/aggregate</label>
+          <label><input type="radio" name="texture" value="Unknown"> Unknown</label>
+        </div>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Previously repaired or patched?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="prev" value="Yes"> Yes</label>
+        <label><input type="radio" name="prev" value="No"> No</label>
+        <label><input type="radio" name="prev" value="Unknown"> Unknown</label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Drainage in or near work areas?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="drain" value="Yes"> Yes</label>
+        <label><input type="radio" name="drain" value="No"> No</label>
+        <label><input type="radio" name="drain" value="Unknown"> Unknown</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. SCOPE -->
+  <div class="section">
+    <div class="section-title"><span class="badge">5</span> Scope & Responsibilities</div>
+    <div class="field-group">
+      <label>Demo status when floor work begins?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="demo" value="Demo complete before floor work"> Demo complete first</label>
+        <label><input type="radio" name="demo" value="Concurrent – equipment still being removed"> Concurrent</label>
+        <label><input type="radio" name="demo" value="TBD"> TBD</label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Who removes / grinds anchor bolts?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="anchresp" value="HDSP (include in quote)"> HDSP</label>
+        <label><input type="radio" name="anchresp" value="GC / BW Design Group"> GC / BW Design</label>
+        <label><input type="radio" name="anchresp" value="TBD"> TBD</label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Surface prep (shot blast / grind) in HDSP scope?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="prep" value="Yes – include in quote"> Yes – include in quote</label>
+        <label><input type="radio" name="prep" value="No – pre-prepped by others"> No – pre-prepped</label>
+        <label><input type="radio" name="prep" value="TBD"> TBD</label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Open questions or unresolved items</label>
+      <textarea id="f_openq" placeholder="e.g. Moisture barrier scope unclear, drain relocation TBD..."></textarea>
+    </div>
+  </div>
+
+  <!-- 6. JOB WALK -->
+  <div class="section">
+    <div class="section-title"><span class="badge">6</span> Job Walk</div>
+    <div class="field-group">
+      <label>Is a job walk still needed?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="jobwalk" value="No – this form covers it"> No – form covers it</label>
+        <label><input type="radio" name="jobwalk" value="Maybe – pending HDSP questions"> Maybe</label>
+        <label><input type="radio" name="jobwalk" value="Yes – site visit needed"> Yes</label>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="field-group">
+        <label>Preferred job walk dates</label>
+        <input type="text" id="f_walkdate" placeholder="e.g. Week of March 9, afternoons">
+      </div>
+      <div class="field-group">
+        <label>On-site contact name & phone</label>
+        <input type="text" id="f_walkcontact" placeholder="Name – 775-000-0000">
+      </div>
+    </div>
+  </div>
+
+  <button class="submit-btn" onclick="submitForm()">📤 Submit Pre-Quote Assessment</button>
+</div>
+</div><!-- /form-wrapper -->
+
+<!-- ── REPORT ── -->
+<div id="report">
+  <div class="report-header">
+    <h1>🏭 Clorox HVM – Reno | Floor Patching Pre-Quote Report</h1>
+    <p id="r_meta"></p>
+  </div>
+  <div class="report-body">
+    <div class="print-btn">
+      <button class="btn-print" onclick="window.print()">🖨️ Save as PDF / Print</button>
+      <button class="btn-back" onclick="goBack()">← Edit Form</button>
+    </div>
+
+    <div class="report-section">
+      <h2>1 · Submitter & Project Info</h2>
+      <div id="r_project"></div>
+    </div>
+    <div class="report-section">
+      <h2>2 · Site Access & Conditions</h2>
+      <div id="r_site"></div>
+    </div>
+    <div class="report-section">
+      <h2>3 · Hades Line</h2>
+      <div id="r_hades"></div>
+    </div>
+    <div class="report-section">
+      <h2>4 · Pluto Line</h2>
+      <div id="r_pluto"></div>
+    </div>
+    <div class="report-section">
+      <h2>5 · Existing Floor Specs</h2>
+      <div id="r_floor"></div>
+    </div>
+    <div class="report-section">
+      <h2>6 · Scope & Responsibilities</h2>
+      <div id="r_scope"></div>
+    </div>
+    <div class="report-section">
+      <h2>7 · Job Walk</h2>
+      <div id="r_walk"></div>
+    </div>
+
+    <div class="report-section">
+      <h2>8 · Estimator Worksheet</h2>
+      <p style="font-size:0.82rem;color:#666;margin-bottom:12px">To be completed by BW Design Group estimator after review.</p>
+      <table class="estimate-table">
+        <tr><th>Item</th><th>Hades Line</th><th>Pluto Line</th></tr>
+        <tr><td>Estimated Labor Hours</td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>Material Cost (epoxy/patch)</td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>Surface Prep Cost</td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>Moisture Barrier Cost</td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>Mobilization / Travel</td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td>Permits / Safety Fees</td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td><strong>Subtotal</strong></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td><strong>Contingency (%)</strong></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td><strong>TOTAL ESTIMATE</strong></td><td class="blank"></td><td class="blank"></td></tr>
+      </table>
+      <div style="margin-top:16px;font-size:0.85rem">
+        <div class="report-row"><span class="lbl">Estimator Name</span><span class="val" style="border-bottom:1px solid #ccc;min-width:200px">&nbsp;</span></div>
+        <div class="report-row"><span class="lbl">Date Reviewed</span><span class="val" style="border-bottom:1px solid #ccc;min-width:200px">&nbsp;</span></div>
+        <div class="report-row"><span class="lbl">Notes</span><span class="val" style="border-bottom:1px solid #ccc;min-width:200px">&nbsp;</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ── helpers ──
+  function radio(name){const el=document.querySelector(`input[name="${name}"]:checked`);return el?el.value:'—'}
+  function checks(groupId){return[...document.querySelectorAll(`#${groupId} input:checked`)].map(e=>e.value).join(', ')||'—'}
+  function val(id){const el=document.getElementById(id);return el&&el.value.trim()?el.value.trim():'—'}
+  function row(lbl,v){return`<div class="report-row"><span class="lbl">${lbl}</span><span class="val">${v}</span></div>`}
+  function switchTab(area,el){
+    document.querySelectorAll('.area-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.area-panel').forEach(p=>p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('panel-'+area).classList.add('active');
+  }
+  function showC(id){document.getElementById(id).classList.add('show')}
+  function hideC(id){document.getElementById(id).classList.remove('show')}
+  function goBack(){
+    document.getElementById('report').style.display='none';
+    document.getElementById('form-wrapper').style.display='block';
+    window.scrollTo(0,0);
+  }
+
+  // progress
+  function updateProgress(){
+    const inputs=document.querySelectorAll('input[type=text],input[type=number],input[type=email],textarea');
+    let filled=0;inputs.forEach(i=>{if(i.value.trim())filled++});
+    document.getElementById('progress').style.width=Math.min(100,Math.round(filled/inputs.length*100))+'%';
+  }
+  document.addEventListener('input',updateProgress);
+  updateProgress();
+
+  // ── submit ──
+  function submitForm(){
+    const now=new Date().toLocaleString('en-US',{dateStyle:'long',timeStyle:'short'});
+
+    // build report sections
+    document.getElementById('r_meta').textContent=`Submitted: ${now} · Project: Clorox HVM – Reno Floor Patching (Hades & Pluto)`;
+
+    document.getElementById('r_project').innerHTML=
+      row('Submitted By',val('f_name'))+
+      row('Company',val('f_company'))+
+      row('Email',val('f_email'))+
+      row('Phone',val('f_phone'))+
+      row('Target Start',val('f_start'))+
+      row('Required Completion',val('f_end'))+
+      row('Shutdown / Blackout Periods',val('f_shutdown'));
+
+    document.getElementById('r_site').innerHTML=
+      row('Environment',radio('env'))+
+      row('Live Production During Work',radio('live'))+
+      row('Work Hour Restrictions',checks('chk_hours'))+
+      row('Safety Orientation Required',radio('orient'))+
+      row('Hot Work Permit Required',radio('hotwork'))+
+      row('Ventilation',radio('vent'))+
+      row('Special PPE / Access',val('f_ppe'));
+
+    document.getElementById('r_hades').innerHTML=
+      row('Patch Area (sq ft)',val('h_sqft'))+
+      row('Patch Depth',val('h_depth'))+
+      row('Floor Conditions',checks('chk_hcond'))+
+      row('Items Being Removed',val('h_removed'))+
+      row('Finish Requirement',radio('h_finish'))+
+      row('Moisture Barrier / Pour-Back',radio('h_moisture'))+
+      (document.getElementById('h_mdetail').classList.contains('show')?row('Moisture Detail',val('h_mdetail_txt')):'')+
+      row('New Anchor Bolt Locations',radio('h_anchors'))+
+      row('Additional Notes',val('h_notes'));
+
+    document.getElementById('r_pluto').innerHTML=
+      row('Patch Area (sq ft)',val('p_sqft'))+
+      row('Patch Depth',val('p_depth'))+
+      row('Floor Conditions',checks('chk_pcond'))+
+      row('Items Being Removed',val('p_removed'))+
+      row('Finish Requirement',radio('p_finish'))+
+      row('Moisture Barrier / Pour-Back',radio('p_moisture'))+
+      (document.getElementById('p_mdetail').classList.contains('show')?row('Moisture Detail',val('p_mdetail_txt')):'')+
+      row('New Footprint vs. Removed',radio('p_footprint'))+
+      row('Additional Notes',val('p_notes'));
+
+    document.getElementById('r_floor').innerHTML=
+      row('Epoxy Product / System',val('f_epoxy'))+
+      row('Coating Age',val('f_age'))+
+      row('Coating Color',val('f_color'))+
+      row('Texture / Finish',radio('texture'))+
+      row('Previously Patched',radio('prev'))+
+      row('Drainage Near Work Area',radio('drain'));
+
+    document.getElementById('r_scope').innerHTML=
+      row('Demo Status at Floor Work Start',radio('demo'))+
+      row('Anchor Bolt Removal Responsibility',radio('anchresp'))+
+      row('Surface Prep in HDSP Scope',radio('prep'))+
+      row('Open Questions / Unresolved Items',val('f_openq'));
+
+    document.getElementById('r_walk').innerHTML=
+      row('Job Walk Still Needed',radio('jobwalk'))+
+      row('Preferred Dates',val('f_walkdate'))+
+      row('On-Site Contact',val('f_walkcontact'));
+
+    // show report, hide form
+    document.getElementById('form-wrapper').style.display='none';
+    document.getElementById('report').style.display='block';
+    window.scrollTo(0,0);
+  }
+</script>
+</body>
+</html>
